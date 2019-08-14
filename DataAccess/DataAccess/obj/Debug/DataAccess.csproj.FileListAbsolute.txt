@@ -1,0 +1,10 @@
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\DataAccess.dll.config
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\DataAccess.dll
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\DataAccess.pdb
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.dll
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.xml
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.dll
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.pdb
