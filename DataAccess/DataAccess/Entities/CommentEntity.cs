@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    class CommentEntity: BaseEntity {
+   public class CommentEntity: BaseEntity {
         [ForeignKey("Author")]
         public int AuthorID { get; set; }
         [ForeignKey("Post")]

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    class PostEntity: BaseEntity {
+   public class PostEntity: BaseEntity {
         [ForeignKey("Author")]
         public int AuthorID { get; set; }
         public DateTime TimePosted { get; set; }

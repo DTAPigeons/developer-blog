@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    class ImageEntity: BaseEntity {
+   public class ImageEntity: BaseEntity {
         [ForeignKey("Post")]
         public int PostID { get; set; }
         public string Path { get; set; }

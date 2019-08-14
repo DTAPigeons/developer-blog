@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    class UserEntity : BaseEntity {
+   public class UserEntity : BaseEntity {
         [StringLength(100)]
         public string UserName { get; set; }
         public string Role { get; set; }

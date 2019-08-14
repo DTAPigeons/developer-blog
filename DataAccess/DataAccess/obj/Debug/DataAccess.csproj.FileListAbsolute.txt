@@ -7,3 +7,4 @@ H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.
 H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.dll
 H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.pdb
+H:\Uni\DeveloperBlogDistributed\DataAccess\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
