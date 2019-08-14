@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    class BaseEntity {
+    abstract class BaseEntity {
         public int ID { get; set; }
     }
 }
