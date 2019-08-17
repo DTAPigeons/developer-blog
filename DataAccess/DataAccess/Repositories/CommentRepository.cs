@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Repositories {
    public class CommentRepository : BaseRepository<CommentEntity> {
         public override List<CommentEntity> GetAll(int pageNumber, int pageSize, bool descending, string sortParameter = "") {
-            throw new NotImplementedException();
+            return GetAll();
         }
     }
 }

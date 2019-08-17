@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
-    public abstract class PostListModel : BaseModel<PostEntity> {
+    public class PostListModel : BaseModel<PostEntity> {
         [Required]
         public int AuthorID { get; set; }
         [Required]
