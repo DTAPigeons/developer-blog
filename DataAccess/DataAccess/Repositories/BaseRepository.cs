@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories {
-    abstract class BaseRepository<TEntity> where TEntity:BaseEntity {
+    public abstract class BaseRepository<TEntity> where TEntity:BaseEntity {
         protected DevBlogContext context;
         protected DbSet<TEntity> entities;
 
@@ -61,6 +61,7 @@ namespace DataAccess.Repositories {
         }
 
         private void Update(TEntity entity) {
+            entities.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
         }
 

@@ -1,20 +1,25 @@
 ﻿using DataAccess.Entities;
+using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
     public class CommentModel : BaseModel<CommentEntity> {
-
+        [Required]
         public int AuthorID { get; set; }
+        [Required]
         public int PostID { get; set; }
+        [Required]
         public string Content { get; set; }
+        [Required]
         public DateTime TimePosted { get; set; }
         public int? ResponseToID { get; set; }
 
         public List<CommentModel> Responses { get; set; }
-        public virtual UserModel Author { get; set; }
+        public virtual UserListModel Author { get; set; }
 
         public CommentModel() {
 
@@ -27,7 +32,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
             TimePosted = entity.TimePosted;
             ResponseToID = entity.ResponseToID;
 
-            Author = new UserModel(entity.Author);
+            Author = new UserListModel(entity.Author);
 
             Responses = new List<CommentModel>();
 
@@ -45,6 +50,20 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
             entity.TimePosted = TimePosted;
             entity.ResponseToID = ResponseToID;
             return entity;
+        }
+
+        public override bool IsValid() {
+            PostRepository postRepositoy = new PostRepository();
+            UserRepository userRepository = new UserRepository();
+            CommentRepository commentRepository = new CommentRepository();
+            PostEntity post = postRepositoy.GetByID(PostID);
+            if (post == null) return false;
+            if (post.Views >= 0) return false;
+            if (userRepository.GetByID(AuthorID) == null) return false;
+            if(ResponseToID!=null && ResponseToID > 0) {
+                if (commentRepository.GetByID((int)ResponseToID) == null) return false; 
+            }
+            return true;
         }
     }
 }

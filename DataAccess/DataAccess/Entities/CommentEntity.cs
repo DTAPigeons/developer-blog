@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 namespace DataAccess.Entities {
    public class CommentEntity: BaseEntity {
         [ForeignKey("Author")]
+        [Required]
         public int AuthorID { get; set; }
         [ForeignKey("Post")]
+        [Required]
         public int PostID { get; set; }
         [MaxLength]
+        [Required]
         public string Content { get; set; }
+        [Required]
         public DateTime TimePosted { get; set; }
         [ForeignKey("ResponseTo")]
         public int? ResponseToID { get; set; }

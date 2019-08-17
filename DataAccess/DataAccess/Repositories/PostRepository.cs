@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories {
-    class PostRepository : BaseRepository<PostEntity> {
+   public class PostRepository : BaseRepository<PostEntity> {
 
         public PostRepository() { }
 

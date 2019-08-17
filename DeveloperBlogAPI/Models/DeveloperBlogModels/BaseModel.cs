@@ -17,5 +17,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public abstract TEntity ToEntity();
+
+        public abstract bool IsValid();
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories {
-    class UserRepository:BaseRepository<UserEntity> {
+   public class UserRepository:BaseRepository<UserEntity> {
         public override List<UserEntity> GetAll(int pageNumber, int pageSize, bool descending, string sortParameter = "") {
             switch (sortParameter) {
                 case "User Name":

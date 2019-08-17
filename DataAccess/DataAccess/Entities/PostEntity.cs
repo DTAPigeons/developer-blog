@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 namespace DataAccess.Entities {
    public class PostEntity: BaseEntity {
         [ForeignKey("Author")]
+        [Required]
         public int AuthorID { get; set; }
+        [Required]
         public DateTime TimePosted { get; set; }
         [StringLength(256)]
+        [Required]
         public string Title { get; set; }
         [MaxLength]
         [DataType(DataType.MultilineText)]
+        [Required]
         public string Content { get; set; }
         public int Views { get; set; }
 

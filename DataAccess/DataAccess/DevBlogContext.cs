@@ -8,14 +8,14 @@ using DataAccess.Entities;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace DataAccess {
-    class DevBlogContext: DbContext {
+    public class DevBlogContext: DbContext {
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Entity<UserEntity>().HasIndex(u => u.UserName).IsUnique();
 
         }
 
-        public DevBlogContext() : base(){
+        public DevBlogContext() : base("Developer Blog"){
 
         }
 
