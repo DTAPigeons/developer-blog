@@ -5,11 +5,9 @@ using System.Web;
 using DataAccess.Entities;
 
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
-    public class PostInsertModel: PostListModel {
-        public override PostEntity ToEntity() {
-            PostEntity entity = base.ToEntity();
-            entity.ID = -1;
-            entity.Views = 0;
+    public class CommentInsertModel:CommentListModel {
+        public override CommentEntity ToEntity() {
+            CommentEntity entity = base.ToEntity();
             entity.TimePosted = DateTime.Now;
             return entity;
         }

@@ -9,21 +9,21 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
 
         public virtual UserListModel Author { get; set; }
         public virtual List<ImageModel> Images { get; set; }
-        public virtual List<CommentModel> Comments { get; set; }
+        public virtual List<CommentListModel> Comments { get; set; }
 
         public PostViewModel(PostEntity entity):base(entity) {
 
             Author = new UserListModel(entity.Author);
 
             Images = new List<ImageModel>();
-            Comments = new List<CommentModel>();
+            Comments = new List<CommentListModel>();
 
             foreach (ImageEntity image in entity.Images) {
                 Images.Add(new ImageModel(image));
             }
 
             foreach (CommentEntity comment in entity.Comments) {
-                Comments.Add(new CommentModel(comment));
+                Comments.Add(new CommentListModel(comment));
             }
         }
     }

@@ -14,5 +14,6 @@ namespace DeveloperBlogAPI.Messages {
 
         [JsonProperty(PropertyName = "error", NullValueHandling = NullValueHandling.Ignore)]
         public object Error { get; set; }
+
     }
 }

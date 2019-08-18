@@ -23,6 +23,7 @@ namespace DeveloperBlogAPI.Controllers
         private TRepository repository = (TRepository)Activator.CreateInstance<TRepository>();
 
         [AllowAnonymous]
+        [HttpGet]
         public virtual IHttpActionResult GetAll(int page, int pageSize, bool descending, string sortParameter) {
             List<TListModel> models = new List<TListModel>();
 
@@ -34,12 +35,14 @@ namespace DeveloperBlogAPI.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public virtual IHttpActionResult GetByID(int id) {
             TEntity entity = repository.GetByID(id);
             return Json((TViewModel)Activator.CreateInstance(typeof(TViewModel),entity));
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public virtual IHttpActionResult Save(TInsertModel model) {
             ResponseMessage response = new ResponseMessage();
             if (!model.IsValid()) {
@@ -63,13 +66,14 @@ namespace DeveloperBlogAPI.Controllers
             return Json(response);
         }
 
-
+        [HttpPost]
+        [AllowAnonymous]
         public virtual IHttpActionResult Save() {
             HttpContent content = Request.Content;
             string jsonContent = content.ReadAsStringAsync().Result;
             TInsertModel model = JsonConvert.DeserializeObject<TInsertModel>(jsonContent);
             ResponseMessage response = new ResponseMessage();
-            if (!model.IsValid()) {
+            if (model == null || !model.IsValid()) {
                 response.Code = HttpStatusCode.InternalServerError;
                 response.Body = "Invalid model!";
             }

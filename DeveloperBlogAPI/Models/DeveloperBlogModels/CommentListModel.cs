@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
-    public class CommentModel : BaseModel<CommentEntity> {
+    public class CommentListModel : BaseModel<CommentEntity> {
         [Required]
         public int AuthorID { get; set; }
         [Required]
@@ -18,14 +18,14 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         public DateTime TimePosted { get; set; }
         public int? ResponseToID { get; set; }
 
-        public List<CommentModel> Responses { get; set; }
+        public List<CommentListModel> Responses { get; set; }
         public virtual UserListModel Author { get; set; }
 
-        public CommentModel() {
+        public CommentListModel() {
 
         }
 
-        public CommentModel(CommentEntity entity):base(entity) {
+        public CommentListModel(CommentEntity entity):base(entity) {
             AuthorID = entity.AuthorID;
             PostID = entity.PostID;
             Content = entity.Content;
@@ -34,10 +34,10 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
 
             Author = new UserListModel(entity.Author);
 
-            Responses = new List<CommentModel>();
+            Responses = new List<CommentListModel>();
 
             foreach(CommentEntity responce in entity.Responses) {
-                Responses.Add(new CommentModel(responce));
+                Responses.Add(new CommentListModel(responce));
             }
         }
 
