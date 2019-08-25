@@ -16,7 +16,7 @@ namespace DeveloperBlogAPI.Controllers
     [AllowAnonymous]
     public class ImageController : ApiController
     {
-        ImageRepository repository = new ImageRepository()
+        ImageRepository repository = new ImageRepository();
 
 
         [HttpPost]

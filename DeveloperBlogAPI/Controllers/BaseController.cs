@@ -1,6 +1,7 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Repositories;
 using DeveloperBlogAPI.Messages;
+using DeveloperBlogAPI.Misc;
 using DeveloperBlogAPI.Models.DeveloperBlogModels;
 using Newtonsoft.Json;
 using System;
@@ -23,11 +24,13 @@ namespace DeveloperBlogAPI.Controllers
         private TRepository repository = (TRepository)Activator.CreateInstance<TRepository>();
 
         [AllowAnonymous]
-        [HttpGet]
-        public virtual IHttpActionResult GetAll(int page, int pageSize, bool descending, string sortParameter) {
+        [HttpPost]
+        public abstract IHttpActionResult GetAll(); 
+
+        protected virtual IHttpActionResult GetAll(PagerModel pagerModel) {
             List<TListModel> models = new List<TListModel>();
 
-            foreach (TEntity entity in repository.GetAll(page, pageSize, descending, sortParameter)) {
+            foreach (TEntity entity in repository.GetAll(pagerModel.Page, pagerModel.PageSize, pagerModel.Desending, pagerModel.SortParameter)) {
                 models.Add((TListModel)Activator.CreateInstance(typeof(TListModel),entity));
             }
 

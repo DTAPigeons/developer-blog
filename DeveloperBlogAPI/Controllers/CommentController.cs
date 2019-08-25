@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Repositories;
+using DeveloperBlogAPI.Misc;
 using DeveloperBlogAPI.Models.DeveloperBlogModels;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace DeveloperBlogAPI.Controllers
     public class CommentController : BaseController<CommentRepository,CommentEntity,CommentListModel,CommentInsertModel,CommentListModel>
     {
         [Route("")]
-        [HttpGet]
-        public override IHttpActionResult GetAll(int page = 1, int pageSize = 10, bool descending = true, string sortParameter = "Date") {
-            return base.GetAll(page, pageSize, descending, sortParameter);
+        [HttpPost]
+        public override IHttpActionResult GetAll() {
+            return base.GetAll(new PagerModel());
         }
 
         [HttpGet]

@@ -1,6 +1,7 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Repositories;
 using DeveloperBlogAPI.Messages;
+using DeveloperBlogAPI.Misc;
 using DeveloperBlogAPI.Models.DeveloperBlogModels;
 using Newtonsoft.Json;
 using System;
@@ -16,9 +17,12 @@ namespace DeveloperBlogAPI.Controllers {
     [RoutePrefix("api/User")]
     public class UserController : BaseController<UserRepository,UserEntity,UserListModel,UserInsertModel,UserViewModel> {
         [Route("")]
-        [HttpGet]
-        public override IHttpActionResult GetAll(int page = 1, int pageSize = 10, bool descending = true, string sortParameter = "Date") {
-            return base.GetAll(page, pageSize, descending, sortParameter);
+        [HttpPost]
+        public override IHttpActionResult GetAll() {
+            HttpContent content = Request.Content;
+            string jsonContent = content.ReadAsStringAsync().Result;
+            PagerModel model = JsonConvert.DeserializeObject<PagerModel>(jsonContent);
+            return GetAll(model);
         }
 
         [HttpGet]

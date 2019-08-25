@@ -258,6 +258,7 @@
     </Compile>
     <Compile Include="Messages\ResponseMessage.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Misc\PagerModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\CommentInsertModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\CommentListModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\ImageModel.cs" />
