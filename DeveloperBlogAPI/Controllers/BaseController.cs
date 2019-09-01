@@ -21,13 +21,16 @@ namespace DeveloperBlogAPI.Controllers
         where TInsertModel: BaseModel<TEntity>
         where TViewModel: BaseModel<TEntity>
         {
-        private TRepository repository = (TRepository)Activator.CreateInstance<TRepository>();
+        protected TRepository repository;
 
         [AllowAnonymous]
         [HttpPost]
-        public abstract IHttpActionResult GetAll(); 
+        public abstract IHttpActionResult GetAll();
+
+        protected abstract void SetRepository();
 
         protected virtual IHttpActionResult GetAll(PagerModel pagerModel) {
+            SetRepository();
             List<TListModel> models = new List<TListModel>();
 
             foreach (TEntity entity in repository.GetAll(pagerModel.Page, pagerModel.PageSize, pagerModel.Desending, pagerModel.SortParameter)) {
@@ -40,6 +43,7 @@ namespace DeveloperBlogAPI.Controllers
         [AllowAnonymous]
         [HttpGet]
         public virtual IHttpActionResult GetByID(int id) {
+            SetRepository();
             TEntity entity = repository.GetByID(id);
             return Json((TViewModel)Activator.CreateInstance(typeof(TViewModel),entity));
         }
@@ -47,6 +51,7 @@ namespace DeveloperBlogAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         public virtual IHttpActionResult Save(TInsertModel model) {
+            SetRepository();
             ResponseMessage response = new ResponseMessage();
             if (!model.IsValid()) {
                 response.Code = HttpStatusCode.InternalServerError;
@@ -72,6 +77,7 @@ namespace DeveloperBlogAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         public virtual IHttpActionResult Save() {
+            SetRepository();
             HttpContent content = Request.Content;
             string jsonContent = content.ReadAsStringAsync().Result;
             TInsertModel model = JsonConvert.DeserializeObject<TInsertModel>(jsonContent);
@@ -99,6 +105,7 @@ namespace DeveloperBlogAPI.Controllers
 
         [HttpDelete]
         public virtual IHttpActionResult Delete(int id) {
+            SetRepository();
             ResponseMessage response = new ResponseMessage();
 
             try {

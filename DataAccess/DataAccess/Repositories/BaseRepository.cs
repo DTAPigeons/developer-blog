@@ -18,42 +18,63 @@ namespace DataAccess.Repositories {
         }
 
         public int GetFirstID() {
-            return entities.First().ID;
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                return entities.First().ID;
+            }
         }
 
         public TEntity GetByID(int id) {
-            return entities.Where(enity => enity.ID == id).FirstOrDefault();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                return entities.Where(enity => enity.ID == id).FirstOrDefault();
+            }            
         }
 
         public List<TEntity> GetAll() {
-            return entities.ToList();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                return entities.ToList();
+            }
         }
 
         public List<TEntity> GetAll(int pageNumber = 1, int pageSize = 100) {
-            return entities.OrderBy(entity => entity.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                return entities.OrderBy(entity => entity.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
         }
 
         public abstract List<TEntity> GetAll(int pageNumber, int pageSize, bool descending, string sortParameter = "");
 
         public List<TEntity> GetAll<TKey>(int pageNumber, int pageSize, Expression<Func<TEntity, TKey>> orderFilter, Expression<Func<TEntity, bool>> includeFilter, bool descending = false) {
-            if (descending) { return entities.OrderByDescending(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(); }
-            return entities.OrderBy(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                if (descending) { return entities.OrderByDescending(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(); }
+                return entities.OrderBy(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }           
         }
 
         public int GetCount() {
-            return entities.Count();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                return entities.Count();
+            }            
         }
 
         public void Save(TEntity entity) {
-            if (entity.ID > 0) {
-                Update(entity);
-            }
-            else {
-                entity.ID = entities.Count() + 1;
-                Insert(entity);
-            }
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                if (entity.ID > 0) {
+                    Update(entity);
+                }
+                else {
+                    entity.ID = entities.Count() + 1;
+                    Insert(entity);
+                }
 
-            context.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
         private void Insert(TEntity entity) {
@@ -66,8 +87,11 @@ namespace DataAccess.Repositories {
         }
 
         public void Delete(TEntity entity) {
-            entities.Remove(entity);
-            context.SaveChanges();
+            using (context = new DevBlogContext()) {
+                entities = context.Set<TEntity>();
+                entities.Remove(entity);
+                context.SaveChanges(); ;
+            }
         }
     }
 }

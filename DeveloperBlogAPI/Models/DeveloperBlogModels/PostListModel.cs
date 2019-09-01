@@ -9,7 +9,7 @@ using System.Web;
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
     public class PostListModel : BaseModel<PostEntity> {
         [Required]
-        public int AuthorID { get; set; }
+        public string Author { get; set; }
         [Required]
         public DateTime TimePosted { get; set; }
         [StringLength(256)]
@@ -25,7 +25,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public PostListModel(PostEntity entity):base(entity) {
-            AuthorID = entity.AuthorID;
+            Author = entity.Author.UserName;
             TimePosted = entity.TimePosted;
             Title = entity.Title;
             Content = entity.Content;
@@ -35,7 +35,6 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         public override PostEntity ToEntity() {
             PostEntity entity = new PostEntity();
             entity.ID = ID;
-            entity.AuthorID = AuthorID;
             entity.TimePosted = TimePosted;
             entity.Title = Title;
             entity.Content = Content;
@@ -45,8 +44,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
 
         public override bool IsValid() {
             UserRepository userRepository = new UserRepository();
-            UserEntity user = userRepository.GetByID(AuthorID);
-            return user != null;
+            return userRepository.UserNameExists(Author);
         }
     }
 }

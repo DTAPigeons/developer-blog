@@ -51,5 +51,9 @@ namespace DeveloperBlogAPI.Controllers
         public override IHttpActionResult Delete(int id) {
             return base.Delete(id);
         }
+
+        protected override void SetRepository() {
+            repository = new PostRepository();
+        }
     }
 }
