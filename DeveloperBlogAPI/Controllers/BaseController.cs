@@ -78,9 +78,7 @@ namespace DeveloperBlogAPI.Controllers
         [AllowAnonymous]
         public virtual IHttpActionResult Save() {
             SetRepository();
-            HttpContent content = Request.Content;
-            string jsonContent = content.ReadAsStringAsync().Result;
-            TInsertModel model = JsonConvert.DeserializeObject<TInsertModel>(jsonContent);
+            TInsertModel model = GetModelFromRequest(Request.Content);
             ResponseMessage response = new ResponseMessage();
             if (model == null || !model.IsValid()) {
                 response.Code = HttpStatusCode.InternalServerError;
@@ -102,6 +100,10 @@ namespace DeveloperBlogAPI.Controllers
             return Json(response);
         }
 
+        protected virtual TInsertModel GetModelFromRequest(HttpContent content) {
+            string jsonContent = content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<TInsertModel>(jsonContent);
+        }
 
         [HttpDelete]
         public virtual IHttpActionResult Delete(int id) {

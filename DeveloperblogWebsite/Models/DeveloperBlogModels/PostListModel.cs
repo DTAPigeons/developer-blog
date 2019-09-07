@@ -8,14 +8,12 @@ using System.Web;
 
 namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class PostListModel : BaseModel<PostEntity> {
-        [Required]
         public string Author { get; set; }
-        [Required]
         public DateTime TimePosted { get; set; }
         [StringLength(256)]
         [Required]
         public string Title { get; set; }
-        [MaxLength]
+        [DataType(DataType.MultilineText)]
         [Required]
         public string Content { get; set; }
         public int Views { get; set; }

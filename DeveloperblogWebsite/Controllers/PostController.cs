@@ -31,5 +31,26 @@ namespace DeveloperblogWebsite.Controllers
             return View(posts);
         }
 
+        public ActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(PostInsertModel model) {
+            model.Author = "DeathToAllPigeons";
+            if (ModelState.IsValid) {
+                var content = JsonConvert.SerializeObject(model, Formatting.Indented);
+                HttpResponseMessage responseMessage = await HttpHelper.PostResponsetMassage(POST_URL+"/Save", new StringContent(content), " ");
+                if (responseMessage.IsSuccessStatusCode) {
+                    return RedirectToAction("Index");
+                }
+                else {
+                    return View();
+                }
+            }
+            else {
+                return View();
+            }
+        }
     }
 }

@@ -33,9 +33,18 @@ namespace DeveloperBlogAPI.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Save")]
         public override IHttpActionResult Save() {
             return base.Save();
+        }
+
+        protected override PostInsertModel GetModelFromRequest(HttpContent content) {
+            PostInsertModel model = base.GetModelFromRequest(content);
+            UserRepository userRep = new UserRepository();
+            model.AuthorID = userRep.GetIDByUserName(model.Author);
+            model.TimePosted = DateTime.Now;
+            return model;
         }
 
         [HttpPost]
@@ -43,6 +52,9 @@ namespace DeveloperBlogAPI.Controllers
         [AcceptVerbs("POST")]
         [Route("Save/{model}")]
         public override IHttpActionResult Save(PostInsertModel model) {
+            UserRepository userRep = new UserRepository();
+            model.AuthorID = userRep.GetIDByUserName(model.Author);
+            model.TimePosted = DateTime.Now;
             return base.Save(model);
         }
 

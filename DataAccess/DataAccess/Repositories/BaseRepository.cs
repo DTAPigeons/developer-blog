@@ -18,52 +18,39 @@ namespace DataAccess.Repositories {
         }
 
         public int GetFirstID() {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
                 return entities.First().ID;
-            }
         }
 
         public TEntity GetByID(int id) {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
-                return entities.Where(enity => enity.ID == id).FirstOrDefault();
-            }            
+                return entities.Where(enity => enity.ID == id).FirstOrDefault();       
         }
 
         public List<TEntity> GetAll() {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
                 return entities.ToList();
-            }
         }
 
         public List<TEntity> GetAll(int pageNumber = 1, int pageSize = 100) {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
                 return entities.OrderBy(entity => entity.ID).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            }
         }
 
         public abstract List<TEntity> GetAll(int pageNumber, int pageSize, bool descending, string sortParameter = "");
 
         public List<TEntity> GetAll<TKey>(int pageNumber, int pageSize, Expression<Func<TEntity, TKey>> orderFilter, Expression<Func<TEntity, bool>> includeFilter, bool descending = false) {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
                 if (descending) { return entities.OrderByDescending(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(); }
-                return entities.OrderBy(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-            }           
+                return entities.OrderBy(orderFilter).Where(includeFilter).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();           
         }
 
         public int GetCount() {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
-                return entities.Count();
-            }            
+                return entities.Count();           
         }
 
         public void Save(TEntity entity) {
-            using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
                 if (entity.ID > 0) {
                     Update(entity);
@@ -74,7 +61,6 @@ namespace DataAccess.Repositories {
                 }
 
                 context.SaveChanges();
-            }
         }
 
         private void Insert(TEntity entity) {

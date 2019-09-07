@@ -7,13 +7,10 @@ using System.Web;
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
     public class PostViewModel:PostListModel {
 
-        public virtual UserListModel Author { get; set; }
         public virtual List<ImageModel> Images { get; set; }
         public virtual List<CommentListModel> Comments { get; set; }
 
         public PostViewModel(PostEntity entity):base(entity) {
-
-            Author = new UserListModel(entity.Author);
 
             Images = new List<ImageModel>();
             Comments = new List<CommentListModel>();
