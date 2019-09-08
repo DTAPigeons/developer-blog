@@ -45,7 +45,8 @@ namespace DeveloperBlogAPI.Controllers
         public virtual IHttpActionResult GetByID(int id) {
             SetRepository();
             TEntity entity = repository.GetByID(id);
-            return Json((TViewModel)Activator.CreateInstance(typeof(TViewModel),entity));
+            TViewModel model = (TViewModel)Activator.CreateInstance(typeof(TViewModel), entity);
+            return Json(model);
         }
 
         [HttpPost]

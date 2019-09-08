@@ -12,11 +12,12 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
 
         }
 
+        /*
         public BaseModel(TEntity entity) {
             ID = entity.ID;
         }
-
-        public abstract TEntity ToEntity();
+        */
+      //  public abstract TEntity ToEntity();
 
         public abstract bool IsValid();
     }

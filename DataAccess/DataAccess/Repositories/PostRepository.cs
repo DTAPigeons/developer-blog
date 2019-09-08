@@ -29,5 +29,11 @@ namespace DataAccess.Repositories {
         public List<PostEntity> GetPostsMadeByAuthor(int pageNumber, int pageSize, int authorID) {
             return base.GetAll<int>(pageNumber, pageSize, obj => obj.ID, obj => obj.AuthorID == authorID);
         }
+
+        public void IncrementViews(int id) {
+            PostEntity post = base.GetByID(id);
+            post.Views++;
+            base.Save(post);
+        }
     }
 }

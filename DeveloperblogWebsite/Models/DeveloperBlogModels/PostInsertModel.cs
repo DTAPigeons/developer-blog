@@ -6,6 +6,7 @@ using DataAccess.Entities;
 
 namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class PostInsertModel: PostListModel {
+        /*
         public override PostEntity ToEntity() {
             PostEntity entity = base.ToEntity();
             entity.ID = -1;
@@ -13,5 +14,6 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             entity.TimePosted = DateTime.Now;
             return entity;
         }
+        */
     }
 }

@@ -8,7 +8,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class UserViewModel:UserListModel {
         public virtual List<PostListModel> Posts { get; set; }
         public virtual List<CommentListModel> Comments { get; set; }
-
+        /*
         public UserViewModel(UserEntity entity) : base(entity) {
             Posts = new List<PostListModel>();
             Comments = new List<CommentListModel>();
@@ -20,6 +20,8 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             foreach (CommentEntity comment in entity.Comments) {
                 Comments.Add(new CommentListModel(comment));
             }
+           
         }
+         */
     }
 }

@@ -11,9 +11,28 @@ namespace DeveloperblogWebsite {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Home",
+                url: "",
+                defaults: new { controller = "Post", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "Home 2",
+                url: "Home",
+                defaults: new { controller = "Post", action = "Index" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Post", action = "Index" }
+            );
+
+
+            routes.MapRoute(
+                name: "WithId",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Post", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

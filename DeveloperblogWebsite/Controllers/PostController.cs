@@ -24,8 +24,8 @@ namespace DeveloperblogWebsite.Controllers
             HttpResponseMessage responseMessage = await HttpHelper.PostResponsetMassage(POST_URL, new StringContent(content),"");
             if (responseMessage.IsSuccessStatusCode) {
                
-                var responceDate = responseMessage.Content.ReadAsStringAsync().Result;
-                posts = JsonConvert.DeserializeObject<List<PostListModel>>(responceDate);
+                var responceData = responseMessage.Content.ReadAsStringAsync().Result;
+                posts = JsonConvert.DeserializeObject<List<PostListModel>>(responceData);
                 
             }
             return View(posts);
@@ -33,6 +33,16 @@ namespace DeveloperblogWebsite.Controllers
 
         public ActionResult Create() {
             return View();
+        }
+
+        public async Task<ActionResult> Details(int id) {
+            HttpResponseMessage responseMessage = await HttpHelper.GetResponsetMassage(POST_URL +"/"+ id, "");
+            if (responseMessage.IsSuccessStatusCode) {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                PostViewModel post = JsonConvert.DeserializeObject<PostViewModel>(responseData);                
+                return View(post);
+            }
+            return HttpNotFound();
         }
 
         [HttpPost]
@@ -50,6 +60,39 @@ namespace DeveloperblogWebsite.Controllers
             }
             else {
                 return View();
+            }
+        }
+
+        public async Task<ActionResult> Edit(int id) {
+            try {
+                PostInsertModel post;
+                HttpResponseMessage responseMessage = await HttpHelper.GetResponsetMassage(POST_URL + "/" + id, "");
+                if (responseMessage.IsSuccessStatusCode) {
+                    var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                    post = JsonConvert.DeserializeObject<PostInsertModel>(responseData);
+                    return View(post);
+                }
+                return HttpNotFound();
+            }
+            catch (Exception) {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(PostInsertModel model) {
+            if (ModelState.IsValid) {
+                var content = JsonConvert.SerializeObject(model, Formatting.Indented);
+                HttpResponseMessage responseMessage = await HttpHelper.PostResponsetMassage(POST_URL+"/Save", new StringContent(content), "");
+                if (responseMessage.IsSuccessStatusCode) {
+                    return RedirectToAction("Details",model.ID);
+                }
+                else {
+                    return View(model);
+                }
+            }
+            else {
+                return View(model);
             }
         }
     }

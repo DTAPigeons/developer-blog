@@ -21,7 +21,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public PostListModel() {
 
         }
-
+        /*
         public PostListModel(PostEntity entity):base(entity) {
             Author = entity.Author.UserName;
             TimePosted = entity.TimePosted;
@@ -39,7 +39,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             entity.Views = Views;
             return entity;
         }
-
+        */
         public override bool IsValid() {
             UserRepository userRepository = new UserRepository();
             return userRepository.UserNameExists(Author);

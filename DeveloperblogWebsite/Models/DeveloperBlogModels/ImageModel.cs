@@ -16,7 +16,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public ImageModel() {
 
         }
-
+        /*
         public ImageModel(ImageEntity entity):base(entity) {
             PostID = entity.PostID;
             Path = entity.Path;
@@ -29,7 +29,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             entity.Path = Path;
             return entity;
         }
-
+        */
         public override bool IsValid() {
             PostRepository postRepositoy = new PostRepository();
             PostEntity post = postRepositoy.GetByID(PostID);

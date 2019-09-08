@@ -17,7 +17,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public UserListModel() {
 
         }
-
+        /*
         public UserListModel(UserEntity entity):base(entity) {
             UserName = entity.UserName;
             Role = entity.Role;
@@ -31,7 +31,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             entity.Role = Role;
             return entity;
         }
-
+*/
         public override bool IsValid() {
             return true;
         }

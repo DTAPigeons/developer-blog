@@ -24,7 +24,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public CommentListModel() {
 
         }
-
+        /*
         public CommentListModel(CommentEntity entity):base(entity) {
             AuthorID = entity.AuthorID;
             PostID = entity.PostID;
@@ -51,7 +51,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
             entity.ResponseToID = ResponseToID;
             return entity;
         }
-
+        */
         public override bool IsValid() {
             PostRepository postRepositoy = new PostRepository();
             UserRepository userRepository = new UserRepository();
