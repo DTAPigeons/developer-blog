@@ -64,10 +64,11 @@ namespace DataAccess.Repositories {
                 context.SaveChanges();
         }
 
-        public void Delete(TEntity entity) {
+        public void Delete(int id) {
             using (context = new DevBlogContext()) {
                 entities = context.Set<TEntity>();
-                entities.Remove(entity);
+                var oldEntity = entities.FirstOrDefault(ent => ent.ID == id);
+                entities.Remove(oldEntity);
                 context.SaveChanges(); ;
             }
         }

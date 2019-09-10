@@ -112,8 +112,7 @@ namespace DeveloperBlogAPI.Controllers
             ResponseMessage response = new ResponseMessage();
 
             try {
-                TEntity entity = repository.GetByID(id);
-                repository.Delete(entity);
+                repository.Delete(id);
                 response.Code = HttpStatusCode.Accepted;
                 response.Body = "Deleted object with id = " + id + ".";
             }

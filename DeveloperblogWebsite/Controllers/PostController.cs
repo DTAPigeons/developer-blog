@@ -95,5 +95,13 @@ namespace DeveloperblogWebsite.Controllers
                 return View(model);
             }
         }
+
+        public async Task<ActionResult> Delete(int id) {
+            HttpResponseMessage responseMessage = await HttpHelper.DeleteResponsetMassage(POST_URL + "/Delete/" + id, "");
+            if (responseMessage.IsSuccessStatusCode) {
+                return RedirectToAction("Index");
+            }
+            else return HttpNotFound();
+        }
     }
 }
