@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-   public class PostEntity: BaseEntity {
+   public class PostEntity: BaseEntity<PostEntity> {
         [ForeignKey("Author")]
         [Required]
         public int AuthorID { get; set; }
@@ -25,5 +25,10 @@ namespace DataAccess.Entities {
         public virtual UserEntity Author { get; set; }
         public virtual List<ImageEntity> Images { get; set; }
         public virtual List<CommentEntity> Comments { get; set; }
+
+        public override void Update(PostEntity toCopy) {
+            Title = toCopy.Title;
+            Content = toCopy.Content;
+        }
     }
 }

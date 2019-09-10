@@ -85,7 +85,7 @@ namespace DeveloperblogWebsite.Controllers
                 var content = JsonConvert.SerializeObject(model, Formatting.Indented);
                 HttpResponseMessage responseMessage = await HttpHelper.PostResponsetMassage(POST_URL+"/Save", new StringContent(content), "");
                 if (responseMessage.IsSuccessStatusCode) {
-                    return RedirectToAction("Details",model.ID);
+                    return RedirectToAction("Details", new { id=model.ID});
                 }
                 else {
                     return View(model);

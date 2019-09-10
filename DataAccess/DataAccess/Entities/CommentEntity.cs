@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-   public class CommentEntity: BaseEntity {
+   public class CommentEntity: BaseEntity<CommentEntity> {
         [ForeignKey("Author")]
         [Required]
         public int AuthorID { get; set; }
@@ -26,5 +26,9 @@ namespace DataAccess.Entities {
         public virtual List<CommentEntity> Responses { get; set; }
         public virtual CommentEntity ResponseTo { get; set; }
         public virtual PostEntity Post { get; set; }
+
+        public override void Update(CommentEntity toCopy) {
+            Content = toCopy.Content;
+        }
     }
 }

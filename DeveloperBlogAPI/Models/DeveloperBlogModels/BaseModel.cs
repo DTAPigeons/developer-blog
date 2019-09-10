@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
-    public abstract class BaseModel<TEntity> where TEntity:BaseEntity {
+    public abstract class BaseModel<TEntity> where TEntity:BaseEntity<TEntity> {
         public int ID { get; set; }
 
         public BaseModel() {
@@ -16,7 +16,11 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
             ID = entity.ID;
         }
 
-        public abstract TEntity ToEntity();
+        public virtual TEntity ToEntity() {
+            TEntity entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
+            entity.ID = ID;
+            return entity;
+        }
 
         public abstract bool IsValid();
     }

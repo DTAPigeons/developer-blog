@@ -16,7 +16,7 @@ namespace DeveloperBlogAPI.Controllers
     [AllowAnonymous]
     public abstract class BaseController<TRepository,TEntity,TListModel,TInsertModel,TViewModel> : ApiController
         where TRepository : BaseRepository<TEntity>
-        where TEntity : BaseEntity
+        where TEntity : BaseEntity<TEntity>
         where TListModel : BaseModel<TEntity>
         where TInsertModel: BaseModel<TEntity>
         where TViewModel: BaseModel<TEntity>

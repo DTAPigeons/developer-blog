@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories {
-    public abstract class BaseRepository<TEntity> where TEntity:BaseEntity {
+    public abstract class BaseRepository<TEntity> where TEntity:BaseEntity<TEntity> {
         protected DevBlogContext context;
         protected DbSet<TEntity> entities;
 
@@ -52,24 +52,16 @@ namespace DataAccess.Repositories {
 
         public void Save(TEntity entity) {
                 entities = context.Set<TEntity>();
-                if (entity.ID > 0) {
-                    Update(entity);
-                }
+                var oldEntity = entities.FirstOrDefault(ent => ent.ID == entity.ID);
+                if (oldEntity!=null) {
+                    oldEntity.Update(entity);
+               } 
+                           
                 else {
-                    entity.ID = entities.Count() + 1;
-                    Insert(entity);
+                    entities.Add(entity);
                 }
 
                 context.SaveChanges();
-        }
-
-        private void Insert(TEntity entity) {
-            entities.Add(entity);
-        }
-
-        private void Update(TEntity entity) {
-            entities.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(TEntity entity) {

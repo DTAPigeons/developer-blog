@@ -42,8 +42,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public override CommentEntity ToEntity() {
-            CommentEntity entity = new CommentEntity();
-            entity.ID = ID;
+            CommentEntity entity = base.ToEntity();
             entity.AuthorID = AuthorID;
             entity.PostID = PostID;
             entity.Content = Content;

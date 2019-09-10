@@ -25,8 +25,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public override UserEntity ToEntity() {
-            UserEntity entity = new UserEntity();
-            entity.ID = ID;
+            UserEntity entity = base.ToEntity();
             entity.UserName = UserName;
             entity.Role = Role;
             return entity;

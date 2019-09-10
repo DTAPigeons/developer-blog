@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
-    public abstract class BaseModel<TEntity> where TEntity:BaseEntity {
+    public abstract class BaseModel<TEntity> where TEntity:BaseEntity<TEntity> {
         public int ID { get; set; }
 
         public BaseModel() {

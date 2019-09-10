@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-   public class ImageEntity: BaseEntity {
+   public class ImageEntity: BaseEntity<ImageEntity> {
         [ForeignKey("Post")]
         [Required]
         public int PostID { get; set; }
@@ -15,5 +15,9 @@ namespace DataAccess.Entities {
         public string Path { get; set; }
 
         public virtual PostEntity Post { get; set; }
+
+        public override void Update(ImageEntity toCopy) {
+            throw new NotImplementedException();
+        }
     }
 }

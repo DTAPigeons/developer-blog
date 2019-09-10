@@ -33,8 +33,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public override PostEntity ToEntity() {
-            PostEntity entity = new PostEntity();
-            entity.ID = ID;
+            PostEntity entity = base.ToEntity();
             entity.TimePosted = TimePosted;
             entity.Title = Title;
             entity.Content = Content;

@@ -23,8 +23,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         }
 
         public override ImageEntity ToEntity() {
-            ImageEntity entity = new ImageEntity();
-            entity.ID = ID;
+            ImageEntity entity = base.ToEntity();
             entity.PostID = PostID;
             entity.Path = Path;
             return entity;

@@ -10,7 +10,6 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         public override PostEntity ToEntity() {
             PostEntity entity = base.ToEntity();
             entity.AuthorID = AuthorID;
-            entity.ID = -1;
             entity.Views = 0;
             entity.TimePosted = DateTime.Now;
             return entity;

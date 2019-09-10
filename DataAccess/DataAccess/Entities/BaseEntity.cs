@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities {
-    public abstract class BaseEntity {
+    public abstract class BaseEntity<TEntity> where TEntity : BaseEntity<TEntity> {
         public int ID { get; set; }
+
+        public abstract void Update(TEntity toCopy);
     }
 }
