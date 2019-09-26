@@ -41,6 +41,8 @@
         <dd>
             @Html.DisplayFor(model => model.Views)
         </dd>
+        
+        @Html.Partial("../Image/_Upload", new DeveloperblogWebsite.Models.DeveloperBlogModels.ImageModel() { PostID = Model.ID })
 
     </dl>
 </div>

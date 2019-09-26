@@ -1,9 +1,11 @@
 ﻿using DataAccess.Repositories;
 using DeveloperBlogAPI.Messages;
 using DeveloperBlogAPI.Models.DeveloperBlogModels;
+using DeveloperBlogAPI.Providers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,19 +16,51 @@ using System.Web.Http;
 namespace DeveloperBlogAPI.Controllers
 {
     [AllowAnonymous]
+    [RoutePrefix("api/Image")]
     public class ImageController : ApiController
     {
+        private readonly string IMAGES_FILE = "~/PostImages";
+
         ImageRepository repository = new ImageRepository();
 
 
         [HttpPost]
-        [Route("Save")]
-        public IHttpActionResult Save() {
+        [Route("Save/{postId}")]
+        public async Task<IHttpActionResult> Save(int postId) {
             var request = HttpContext.Current.Request;
-            Dictionary<string, ResponseMessage> responses = new Dictionary<string, Messages.ResponseMessage>();
-            IList<string> allowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
-            int maxContentLength = 1024 * 1024 * 5; //Size = 5 MB
+            ResponseMessage response = new ResponseMessage();
 
+            if (!Request.Content.IsMimeMultipartContent()) {
+                response = new ResponseMessage() {
+                    Code = HttpStatusCode.UnsupportedMediaType,
+                    Body = "Please Upload a valid image"
+                };
+            }
+
+            //Get the path of folder where we want to upload all files.
+            string rootPath = HttpContext.Current.Server.MapPath(IMAGES_FILE);
+            var provider = new CustomMultipartFormDataStreamProvider(rootPath);
+
+            try {
+                await Request.Content.ReadAsMultipartAsync(provider);
+                ImageModel model = new ImageModel();
+                var fileContent = provider.Contents.SingleOrDefault();
+                var filePath = Path.Combine(rootPath, provider.GetLocalFileName(fileContent.Headers));
+
+                model.Path = filePath;
+                model.PostID = postId;
+
+                repository.Save(model.ToEntity());
+            }
+            catch(Exception ex) {
+                response = new ResponseMessage() {
+                    Code = HttpStatusCode.InternalServerError,
+                    Body = "Save failed!: " + ex.Message
+                };
+            }
+
+
+            /*
             string jsonContent = Request.Content.ReadAsStringAsync().Result;
             PostListModel post = JsonConvert.DeserializeObject<PostListModel>(jsonContent);
 
@@ -72,6 +106,7 @@ namespace DeveloperBlogAPI.Controllers
                             responses.Add("error", message);
                         }
                     }
+                    
                 }
                 else {
                     ResponseMessage message = new ResponseMessage() {
@@ -81,7 +116,8 @@ namespace DeveloperBlogAPI.Controllers
                     responses.Add("error", message);
                 }
             }
-            return Json(responses);
+            */
+            return Json(response);
         }
     }
 }
