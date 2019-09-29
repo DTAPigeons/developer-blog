@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -23,6 +24,7 @@ namespace DeveloperBlogAPI.Controllers
 
         ImageRepository repository = new ImageRepository();
 
+        private static readonly SemaphoreSlim imageLock = new SemaphoreSlim(1,1);
 
         [HttpPost]
         [Route("Save/{postId}")]
@@ -37,20 +39,23 @@ namespace DeveloperBlogAPI.Controllers
                 };
             }
 
-            //Get the path of folder where we want to upload all files.
-            string rootPath = HttpContext.Current.Server.MapPath(IMAGES_FILE);
-            var provider = new CustomMultipartFormDataStreamProvider(rootPath);
-
+            await imageLock.WaitAsync();
             try {
+              
+                string rootPath = HttpContext.Current.Server.MapPath(IMAGES_FILE);
+                var provider = new ImageMultipartFormDataStreamProvider(rootPath);
                 await Request.Content.ReadAsMultipartAsync(provider);
-                ImageModel model = new ImageModel();
-                var fileContent = provider.Contents.SingleOrDefault();
-                var filePath = Path.Combine(rootPath, provider.GetLocalFileName(fileContent.Headers));
+                    ImageModel model = new ImageModel();
+                    var fileContent = provider.Contents.SingleOrDefault();
+                    if (provider.LastGeneratedName == null || provider.LastGeneratedName == "") {
+                        throw new Exception("Trying to save empty file name!");
+                    }
+                    var filePath = Path.Combine(rootPath, provider.LastGeneratedName);
 
-                model.Path = filePath;
-                model.PostID = postId;
+                    model.Path = filePath;
+                    model.PostID = postId;
 
-                repository.Save(model.ToEntity());
+                    repository.Save(model.ToEntity());
             }
             catch(Exception ex) {
                 response = new ResponseMessage() {
@@ -58,66 +63,44 @@ namespace DeveloperBlogAPI.Controllers
                     Body = "Save failed!: " + ex.Message
                 };
             }
-
-
-            /*
-            string jsonContent = Request.Content.ReadAsStringAsync().Result;
-            PostListModel post = JsonConvert.DeserializeObject<PostListModel>(jsonContent);
-
-            foreach (string file in request.Files) {
-                var postedFile = request.Files[file];
-                if (postedFile != null && postedFile.ContentLength > 0) {
-                    string ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
-                    string extension = ext.ToLower();
-
-                    if (!allowedFileExtensions.Contains(extension)) {
-                        ResponseMessage message = new ResponseMessage() {
-                            Code = HttpStatusCode.InternalServerError,
-                            Body = "Please Upload image of type .jpg,.gif,.png."
-                        };
-                        responses.Add("error", message);
-                    }
-                    else if (postedFile.ContentLength > maxContentLength) {
-                        ResponseMessage message = new ResponseMessage() {
-                            Code = HttpStatusCode.InternalServerError,
-                            Body = "Please Upload a file upto " +maxContentLength+ " mb."
-                        };
-                        responses.Add("error", message);
-                    }
-                    else {
-                        ImageModel model = new ImageModel();
-                        var filePath = HttpContext.Current.Server.MapPath("~/Userimage/" + post.ID + DateTime.Now.Millisecond + extension);
-                        postedFile.SaveAs(filePath);
-                        model.Path = filePath;
-                        model.PostID = post.ID;
-                        try {
-                            repository.Save(model.ToEntity());
-                            ResponseMessage message = new ResponseMessage() {
-                                Code = HttpStatusCode.Accepted,
-                                Body = "Upload successfull" + maxContentLength + " mb."
-                            };
-                            responses.Add("succes", message);
-                        }
-                        catch(Exception ex) { 
-                            ResponseMessage message = new ResponseMessage() {
-                                Code = HttpStatusCode.InternalServerError,
-                                Body = "Save failed!: " + ex.Message
-                            };
-                            responses.Add("error", message);
-                        }
-                    }
-                    
-                }
-                else {
-                    ResponseMessage message = new ResponseMessage() {
-                        Code = HttpStatusCode.InternalServerError,
-                        Body = "Please upload a file!" 
-                    };
-                    responses.Add("error", message);
-                }
+            finally {
+                imageLock.Release();
             }
-            */
+
             return Json(response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<HttpResponseMessage> GetById(int id) {
+            ImageModel model = null;
+            await imageLock.WaitAsync();
+            try {
+                model = new ImageModel(repository.GetByID(id));
+                if (model == null) {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+                using (var stream = new FileStream(model.Path, FileMode.Open)) {
+                    int length = Convert.ToInt32(stream.Length);
+                    byte[] image = new byte[length];
+                    await stream.ReadAsync(image, 0, length);
+                    var result = new HttpResponseMessage(HttpStatusCode.OK) {
+                        Content = new ByteArrayContent(image)
+                    };
+                    result.Content.Headers.ContentDisposition =
+                    new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") {
+                        FileName = stream.Name
+                    };
+                    return result;
+                }
+
+            }
+            catch(Exception ex) {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            finally {
+                imageLock.Release();
+            }
         }
     }
 }

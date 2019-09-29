@@ -34,7 +34,15 @@ namespace DeveloperblogWebsite.Controllers
 
                 return RedirectToAction("Details", "Post", new { ID = model.PostID });
             }
-            else { return RedirectToAction("Details", "Post", new { ID = model.PostID }); }
+            else { return RedirectToAction("Index", "Post", new { ID = model.PostID }); }
+        }
+
+        public async Task<FileResult> Image(int id) {
+            var responce = await HttpHelper.GetResponsetMassage(IMAGE_URL + "/" + id);
+            string result = responce.Content.ReadAsStringAsync().Result.Replace("\"", string.Empty);
+            // byte[] image = Convert.FromBase64String(result);
+            byte[] image = responce.Content.ReadAsByteArrayAsync().Result;
+            return base.File(image, "image/png");
         }
     }
 }

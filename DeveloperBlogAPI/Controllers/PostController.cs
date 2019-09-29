@@ -28,9 +28,9 @@ namespace DeveloperBlogAPI.Controllers
         [HttpGet]
         [Route("{id}")]
         public override IHttpActionResult GetByID(int id) {
-            SetRepository();
-            repository.IncrementViews(id);
-            return base.GetByID(id);
+                SetRepository();
+                repository.IncrementViews(id);
+                return base.GetByID(id);
         }
 
 

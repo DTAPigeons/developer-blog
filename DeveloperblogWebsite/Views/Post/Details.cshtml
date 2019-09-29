@@ -46,6 +46,11 @@
 
     </dl>
 </div>
+<div class="row">
+    @foreach (DeveloperblogWebsite.Models.DeveloperBlogModels.ImageModel image in Model.Images) {
+        @Html.Partial("../Image/_Display", image)
+    }
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")

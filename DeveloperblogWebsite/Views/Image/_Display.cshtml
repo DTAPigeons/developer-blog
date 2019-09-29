@@ -1,0 +1,11 @@
+﻿@model DeveloperblogWebsite.Models.DeveloperBlogModels.ImageModel
+
+<div class="gallery_product col-lg-10 col-md-10 col-sm-10 col-xs-10 filter hdpe">
+    <a href="@Url.Action("Image","Image", new { id = Model.ID})">
+        <img src="@Url.Action("Image","Image", new { id = Model.ID})" class="img-responsive" style="width:800px; height:auto">
+    </a>
+    <p>
+      <!--  @if (User.IsInRole("Dev")) { <b> @Html.ActionLink("Delete", "Delete", "Image", new { id = Model.ID }, null) </b>} -->
+    </p>
+</div>
+

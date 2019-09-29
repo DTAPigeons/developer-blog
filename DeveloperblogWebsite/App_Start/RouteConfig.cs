@@ -24,7 +24,7 @@ namespace DeveloperblogWebsite {
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
+                url: "{controller}/{action}",
                 defaults: new { controller = "Post", action = "Index" }
             );
 
