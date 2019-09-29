@@ -5,7 +5,7 @@
         <img src="@Url.Action("Image","Image", new { id = Model.ID})" class="img-responsive" style="width:800px; height:auto">
     </a>
     <p>
-      <!--  @if (User.IsInRole("Dev")) { <b> @Html.ActionLink("Delete", "Delete", "Image", new { id = Model.ID }, null) </b>} -->
+       <b> @Html.ActionLink("Delete", "Delete", "Image", new { id = Model.ID, postId = Model.PostID }, null) </b>
     </p>
 </div>
 

@@ -113,7 +113,7 @@ namespace DeveloperBlogAPI.Controllers
 
             try {
                 repository.Delete(id);
-                response.Code = HttpStatusCode.Accepted;
+                response.Code = HttpStatusCode.OK;
                 response.Body = "Deleted object with id = " + id + ".";
             }
             catch (Exception ex) {

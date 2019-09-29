@@ -102,5 +102,27 @@ namespace DeveloperBlogAPI.Controllers
                 imageLock.Release();
             }
         }
+
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public virtual IHttpActionResult Delete(int id) {
+            ResponseMessage response = new ResponseMessage();
+
+            try {
+                var model = repository.GetByID(id);
+                if (model != null) { File.Delete(model.Path); }
+                repository.Delete(id);
+                response.Code = HttpStatusCode.OK;
+                response.Body = "Deleted object with id = " + id + ".";
+            }
+            catch (Exception ex) {
+                response.Code = HttpStatusCode.InternalServerError;
+                response.Body = "Delete failed!: " + ex.Message;
+                throw ex;
+            }
+
+            return Json(response);
+        }
     }
 }

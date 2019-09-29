@@ -44,5 +44,13 @@ namespace DeveloperblogWebsite.Controllers
             byte[] image = responce.Content.ReadAsByteArrayAsync().Result;
             return base.File(image, "image/png");
         }
+
+        public async Task<ActionResult> Delete(int id, int postId) {
+            HttpResponseMessage responseMessage = await HttpHelper.DeleteResponsetMassage(IMAGE_URL + "/Delete/" + id, "");
+            if (responseMessage.IsSuccessStatusCode) {
+                return RedirectToAction("Details","Post",new { id = postId});
+            }
+            else return HttpNotFound();
+        }
     }
 }
