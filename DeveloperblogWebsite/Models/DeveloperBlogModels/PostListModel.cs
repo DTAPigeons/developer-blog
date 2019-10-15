@@ -9,6 +9,7 @@ using System.Web;
 namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class PostListModel : BaseModel<PostEntity> {
         public string Author { get; set; }
+        public int AuthorID { get; set; }
         public DateTime TimePosted { get; set; }
         [StringLength(256)]
         [Required]

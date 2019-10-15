@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Repositories;
+using DeveloperBlogAPI.Messages;
 using DeveloperBlogAPI.Misc;
 using DeveloperBlogAPI.Models.DeveloperBlogModels;
 using System;
@@ -45,11 +46,37 @@ namespace DeveloperBlogAPI.Controllers
         [HttpDelete]
         [Route("Delete/{id}")]
         public override IHttpActionResult Delete(int id) {
-            return base.Delete(id);
+            SetRepository();
+            ResponseMessage response = new ResponseMessage();
+            CommentEntity comment = repository.GetByID(id);
+            if (comment == null) {
+                response.Code = HttpStatusCode.NotFound;
+                response.Body = "Delete failed!: ";
+                return Json(response);
+            }
+            if (comment.Responses == null || comment.Responses.Count <= 0) {
+                return base.Delete(id);
+            }
+            else {
+                comment.Content = "-comment deleted-";
+                repository.Save(comment);
+                response.Code = HttpStatusCode.Accepted;
+                response.Body = "Success!";
+
+                return Json(response);
+            }           
         }
 
         protected override void SetRepository() {
             repository = new CommentRepository();
+        }
+
+        protected override CommentInsertModel GetModelFromRequest(HttpContent content) {
+            CommentInsertModel model =  base.GetModelFromRequest(content);
+            UserRepository userRep = new UserRepository();
+            model.AuthorID = userRep.GetIDByUserName(model.Author);
+            model.TimePosted = DateTime.Now;
+            return model;
         }
     }
 }

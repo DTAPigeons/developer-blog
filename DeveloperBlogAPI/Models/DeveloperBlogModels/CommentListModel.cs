@@ -10,6 +10,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
     public class CommentListModel : BaseModel<CommentEntity> {
         [Required]
         public int AuthorID { get; set; }
+        public string Author { get; set; }
         [Required]
         public int PostID { get; set; }
         [Required]
@@ -19,7 +20,6 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         public int? ResponseToID { get; set; }
 
         public List<CommentListModel> Responses { get; set; }
-        public virtual UserListModel Author { get; set; }
 
         public CommentListModel() {
 
@@ -32,7 +32,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
             TimePosted = entity.TimePosted;
             ResponseToID = entity.ResponseToID;
 
-            Author = new UserListModel(entity.Author);
+            Author = entity.Author.UserName;
 
             Responses = new List<CommentListModel>();
 
@@ -57,7 +57,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
             CommentRepository commentRepository = new CommentRepository();
             PostEntity post = postRepositoy.GetByID(PostID);
             if (post == null) return false;
-            if (post.Views >= 0) return false;
+            if (post.Views <= 0) return false;
             if (userRepository.GetByID(AuthorID) == null) return false;
             if(ResponseToID!=null && ResponseToID > 0) {
                 if (commentRepository.GetByID((int)ResponseToID) == null) return false; 

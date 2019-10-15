@@ -1,0 +1,11 @@
+﻿@model IEnumerable<DeveloperblogWebsite.Models.DeveloperBlogModels.CommentListModel>
+@foreach (var comment in Model) {
+    if (comment.ResponseToID > 0 || comment.ResponseToID != null) { continue; }
+    @Html.Partial("../Comment/_Display", comment)
+    if (comment.Responses == null) { continue; }
+    <div style="margin-left:10%;">
+        @foreach (var respons in comment.Responses) {
+            @Html.Partial("../Comment/_Display", respons)
+        }
+    </div>
+}

@@ -1,0 +1,15 @@
+﻿@model DeveloperblogWebsite.Models.DeveloperBlogModels.CommentInsertModel
+
+@{
+    ViewBag.Title = "Edit Comment";
+}
+
+<h2>Edit Comment</h2>
+
+@Html.Partial("_Create", Model)
+
+
+<div>
+    @Html.ActionLink("Back to Post", "Details", "Post", new { ID = Model.PostID }, null)
+</div>
+

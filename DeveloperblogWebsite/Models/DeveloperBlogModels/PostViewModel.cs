@@ -9,6 +9,11 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
 
         public virtual List<ImageModel> Images { get; set; }
         public virtual List<CommentListModel> Comments { get; set; }
+        public CommentInsertModel CommentInsert { get; set; }
+
+        public PostViewModel() {
+            CommentInsert = new CommentInsertModel() { PostID = ID};
+        }
         /*
         public PostViewModel(PostEntity entity):base(entity) {
 

@@ -10,6 +10,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class CommentListModel : BaseModel<CommentEntity> {
         [Required]
         public int AuthorID { get; set; }
+        public string Author { get; set; }
         [Required]
         public int PostID { get; set; }
         [Required]
@@ -19,7 +20,6 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public int? ResponseToID { get; set; }
 
         public List<CommentListModel> Responses { get; set; }
-        public virtual UserListModel Author { get; set; }
 
         public CommentListModel() {
 

@@ -11,6 +11,8 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
         [Required]
         public string Author { get; set; }
         [Required]
+        public int AuthorID { get; set; }
+        [Required]
         public DateTime TimePosted { get; set; }
         [StringLength(256)]
         [Required]
@@ -26,6 +28,7 @@ namespace DeveloperBlogAPI.Models.DeveloperBlogModels {
 
         public PostListModel(PostEntity entity):base(entity) {
             Author = entity.Author.UserName;
+            AuthorID = entity.AuthorID;
             TimePosted = entity.TimePosted;
             Title = entity.Title;
             Content = entity.Content;

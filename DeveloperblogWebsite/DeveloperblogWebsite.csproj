@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Models\DeveloperBlogModels\BaseModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\CommentInsertModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\CommentListModel.cs" />
+    <Compile Include="Models\DeveloperBlogModels\CommentResponceModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\ImageModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\PostInsertModel.cs" />
     <Compile Include="Models\DeveloperBlogModels\PostListModel.cs" />
@@ -288,6 +290,11 @@
     <Content Include="Views\Post\Edit.cshtml" />
     <Content Include="Views\Image\_Upload.cshtml" />
     <Content Include="Views\Image\_Display.cshtml" />
+    <Content Include="Views\Comment\_CommentSection.cshtml" />
+    <Content Include="Views\Comment\_Display.cshtml" />
+    <Content Include="Views\Comment\_Create.cshtml" />
+    <Content Include="Views\Comment\Edit.cshtml" />
+    <Content Include="Views\Comment\Respond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,7 +39,8 @@ namespace DeveloperblogWebsite.Controllers
             HttpResponseMessage responseMessage = await HttpHelper.GetResponsetMassage(POST_URL +"/"+ id, "");
             if (responseMessage.IsSuccessStatusCode) {
                 var responseData = responseMessage.Content.ReadAsStringAsync().Result;
-                PostViewModel post = JsonConvert.DeserializeObject<PostViewModel>(responseData);                
+                PostViewModel post = JsonConvert.DeserializeObject<PostViewModel>(responseData);
+                post.CommentInsert = new CommentInsertModel() { PostID = post.ID};                
                 return View(post);
             }
             return HttpNotFound();

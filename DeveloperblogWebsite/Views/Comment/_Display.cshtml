@@ -1,0 +1,21 @@
+﻿@model DeveloperblogWebsite.Models.DeveloperBlogModels.CommentListModel
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayFor(c => Model.Author)
+        </dt>
+        <dd>
+            @Html.DisplayFor(c => Model.TimePosted)
+        </dd>
+    </dl>
+    <div style="margin-left:10%;">
+        @Html.DisplayFor(c => Model.Content)
+    </div>
+    <p style="margin-top:2%; margin-left:5%;">
+        <b> @Html.ActionLink("Edit", "Edit", "Comment", new { id = Model.ID }, null)| </b> 
+        <b> @Html.ActionLink("Delete", "Delete", "Comment", new { id = Model.ID, postId = Model.PostID }, null) | </b>
+        <b> @Html.ActionLink("Respond", "Respond", "Comment", new { responseToID = Model.ID }, null) </b>
+    </p>
+    <hr />
+</div>

@@ -51,6 +51,12 @@
         @Html.Partial("../Image/_Display", image)
     }
 </div>
+<div>
+    @Html.Partial("../Comment/_CommentSection", Model.Comments)
+</div>
+    @using (Html.BeginForm("Create", "Comment",FormMethod.Post)) {
+        @Html.Partial("../Comment/_Create", Model.CommentInsert)
+    }
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")

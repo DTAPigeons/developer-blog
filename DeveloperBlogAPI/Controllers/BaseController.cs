@@ -84,6 +84,7 @@ namespace DeveloperBlogAPI.Controllers
             if (model == null || !model.IsValid()) {
                 response.Code = HttpStatusCode.InternalServerError;
                 response.Body = "Invalid model!";
+                return Json(response);
             }
 
             try {
