@@ -1,57 +1,74 @@
-﻿@model IEnumerable<DeveloperblogWebsite.Models.DeveloperBlogModels.PostListModel>
+﻿@model DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels.PostListingModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Posts";
 }
 
-<h2>Index</h2>
+<h2>Posts</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            Title
+            <b>@Html.ActionLink("^", "Index", new { page = Model.Pager.Page, pageSize = Model.Pager.PageSize, descending = false, sortParameter = "Title" })</b>
+            @Html.ActionLink("v", "Index", new { page = Model.Pager.Page, descending = true, sortParameter = "Title" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TimePosted)
+            Author
+            <b>@Html.ActionLink("^", "Index", new { page = Model.Pager.Page, pageSize = Model.Pager.PageSize, descending = false, sortParameter = "Author" })</b>
+            @Html.ActionLink("v", "Index", new { page = Model.Pager.Page, descending = true, sortParameter = "Author" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Posted on
+            <b>@Html.ActionLink("^", "Index", new { page = Model.Pager.Page, pageSize = Model.Pager.PageSize, descending = false, sortParameter = "Date" })</b>
+            @Html.ActionLink("v", "Index", new { page = Model.Pager.Page, descending = true, sortParameter = "Date" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Content)
+            Views
+            <b>@Html.ActionLink("^", "Index", new { page = Model.Pager.Page, pageSize = Model.Pager.PageSize, descending = false, sortParameter = "Views" })</b>
+            @Html.ActionLink("v", "Index", new { page = Model.Pager.Page, pageSize = Model.Pager.PageSize, descending = true, sortParameter = "Views" })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Views)
+            Page Size: 
+            @Html.ActionLink("1", "Index", new { page = Model.Pager.Page, pageSize = 1, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })
+            @Html.ActionLink("5", "Index", new { page = Model.Pager.Page, pageSize = 5, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })
+            @Html.ActionLink("10", "Index", new { page = Model.Pager.Page, pageSize = 10, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimePosted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Views)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Items) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimePosted)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Views)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+@{
+    if (Model.Pager.Page > 1) { <b>@Html.ActionLink("<", "Index", new { page = Model.Pager.Page - 1, pageSize = Model.Pager.PageSize, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })</b>}
+    for (int i = 1; i <= Model.Pager.PagesCount; i++) {
+        <b>@Html.ActionLink(i.ToString(), "Index", new { page = i, pageSize = Model.Pager.PageSize, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })</b>
+    }
+    if (Model.Pager.Page < Model.Pager.PagesCount) { <b>@Html.ActionLink(">", "Index", new { page = Model.Pager.Page + 1, pageSize = Model.Pager.PageSize, descending = Model.Pager.Desending, sortParameter = Model.Pager.SortParameter })</b>}
+}

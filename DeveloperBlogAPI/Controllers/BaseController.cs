@@ -49,6 +49,13 @@ namespace DeveloperBlogAPI.Controllers
             return Json(model);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public virtual IHttpActionResult GetCount() {
+            SetRepository();
+            return Json(new { entityCount = repository.GetCount() });
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public virtual IHttpActionResult Save(TInsertModel model) {

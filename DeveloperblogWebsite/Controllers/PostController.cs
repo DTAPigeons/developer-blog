@@ -1,5 +1,6 @@
 ﻿using DeveloperblogWebsite.Helpers;
 using DeveloperblogWebsite.Models.DeveloperBlogModels;
+using DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,27 @@ namespace DeveloperblogWebsite.Controllers
     public class PostController : Controller
     {
         private readonly string POST_URL = "/Post";
-        private readonly int PAGE_SIZE = 10;
 
         // GET: Post
-        public async Task<ActionResult> Index(PostListModel model, int page = 1, bool descending = true, string sortParameter = "Date") {
-            PagerModel pager = new PagerModel() { Page = page, PageSize = PAGE_SIZE, Desending = descending, SortParameter = sortParameter };
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 10, bool descending = true, string sortParameter = "Date") {
+            PagerModel pager = new PagerModel() { Page = page, PageSize = pageSize, Desending = descending, SortParameter = sortParameter };
             var content = JsonConvert.SerializeObject(pager, Formatting.Indented);
-            List<PostListModel> posts = new List<PostListModel>();
+            List<PostListedModel> posts = new List<PostListedModel>();
             HttpResponseMessage responseMessage = await HttpHelper.PostResponsetMassage(POST_URL, new StringContent(content),"");
             if (responseMessage.IsSuccessStatusCode) {
                
                 var responceData = responseMessage.Content.ReadAsStringAsync().Result;
-                posts = JsonConvert.DeserializeObject<List<PostListModel>>(responceData);
+                posts = JsonConvert.DeserializeObject<List<PostListedModel>>(responceData);
                 
             }
-            return View(posts);
+            HttpResponseMessage postsCountResponseMessage = await HttpHelper.GetResponsetMassage(POST_URL + "/Count");
+
+            if (postsCountResponseMessage.IsSuccessStatusCode) {
+                var responceData = postsCountResponseMessage.Content.ReadAsStringAsync().Result;
+                var entityCountData = JsonConvert.DeserializeAnonymousType(responceData, new { entityCount = 0 });
+                pager.PagesCount = (int)Math.Ceiling(entityCountData.entityCount / (double)pageSize);
+            }
+            return View(new PostListingModel(pager,posts));
         }
 
         public ActionResult Create() {

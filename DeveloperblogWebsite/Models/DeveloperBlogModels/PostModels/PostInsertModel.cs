@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using DataAccess.Entities;
 
-namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
-    public class PostInsertModel: PostListModel {
+namespace DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels {
+    public class PostInsertModel: PostListedModel {
         /*
         public override PostEntity ToEntity() {
             PostEntity entity = base.ToEntity();

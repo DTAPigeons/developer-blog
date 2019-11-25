@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
     public class UserViewModel:UserListModel {
-        public virtual List<PostListModel> Posts { get; set; }
+        public virtual List<PostListedModel> Posts { get; set; }
         public virtual List<CommentListModel> Comments { get; set; }
         /*
         public UserViewModel(UserEntity entity) : base(entity) {

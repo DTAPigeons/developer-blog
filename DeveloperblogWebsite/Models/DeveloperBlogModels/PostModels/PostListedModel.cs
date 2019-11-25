@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
-    public class PostListModel : BaseModel<PostEntity> {
+namespace DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels {
+    public class PostListedModel : BaseModel<PostEntity> {
         public string Author { get; set; }
         public int AuthorID { get; set; }
         public DateTime TimePosted { get; set; }
@@ -19,7 +19,7 @@ namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
         public string Content { get; set; }
         public int Views { get; set; }
 
-        public PostListModel() {
+        public PostListedModel() {
 
         }
         /*

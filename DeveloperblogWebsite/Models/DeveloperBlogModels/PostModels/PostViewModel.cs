@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DeveloperblogWebsite.Models.DeveloperBlogModels {
-    public class PostViewModel:PostListModel {
+namespace DeveloperblogWebsite.Models.DeveloperBlogModels.PostModels {
+    public class PostViewModel:PostListedModel {
 
         public virtual List<ImageModel> Images { get; set; }
         public virtual List<CommentListModel> Comments { get; set; }

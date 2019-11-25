@@ -33,6 +33,13 @@ namespace DeveloperBlogAPI.Controllers
                 return base.GetByID(id);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("Count")]
+        public override IHttpActionResult GetCount() {
+            return base.GetCount();
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
